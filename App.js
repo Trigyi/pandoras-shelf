@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
+import HomeScreen from './screens/HomeScreen';
+
+import { Text as RNText } from 'react-native';
+RNText.defaultProps = RNText.defaultProps || {};
+RNText.defaultProps.style = { fontFamily: 'Handjet-Regular' };
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'Handjet-Regular': require('./assets/fonts/Handjet-Regular.ttf'),
+    'Handjet-SemiBold': require('./assets/fonts/Handjet-SemiBold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <HomeScreen />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
